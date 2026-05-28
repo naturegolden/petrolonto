@@ -47,6 +47,11 @@ async def on_chat_start():
 
 @cl.on_message
 async def main(message: cl.Message):
+    # 检查用户是否想退出
+    if message.content.lower() in ["exit", "退出", "quit", "结束"]:
+        await cl.Message(content="再见！").send()
+        return
+
     brain = cl.user_session.get("brain")  # type: Brain
     path_config = "basic_rag_workflow.yaml"
     retrieval_config = RetrievalConfig.from_yaml(path_config)

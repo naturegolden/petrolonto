@@ -34,12 +34,10 @@ def _define_custom_prompts() -> dict[TemplatePromptName, BasePromptTemplate]:
     # Prompt for task rephrasing
     # ---------------------------------------------------------------------------
     system_message_template = (
-        "Given a chat history and the latest user task "
-        "which might reference context in the chat history, "
-        "formulate a standalone task which can be understood "
-        "without the chat history. Do NOT complete the task, "
-        "just reformulate it if needed and otherwise return it as is. "
-        "Do not output your reasoning, just the task."
+        "给定聊天历史和最新的用户任务（可能引用聊天历史中的上下文），"
+        "制定一个独立的任务，使其在没有聊天历史的情况下也能被理解。不要完成任务，"
+        "如果需要则重新表述，否则按原样返回。"
+        "不要输出你的推理，只返回任务。"
     )
 
     template_answer = "用户任务: {task}\n 独立任务:"
@@ -57,18 +55,15 @@ def _define_custom_prompts() -> dict[TemplatePromptName, BasePromptTemplate]:
     # ---------------------------------------------------------------------------
     # Prompt for RAG
     # ---------------------------------------------------------------------------
-    system_message_template = f"Your name is Quivr. You're a helpful assistant. Today's date is {today_date}. "
+    system_message_template = f"您的名字是 PetrolOnto。您是一个 helpful 的助手。今天的日期是 {today_date}。 "
 
     system_message_template += (
-        "- When answering use markdown. Use markdown code blocks for code snippets.\n"
-        "- Answer in a concise and clear manner.\n"
-        "- If no preferred language is provided, answer in the same language as the language used by the user.\n"
-        "- You must use ONLY the provided context to complete the task. "
-        "Do not use any prior knowledge or external information, even if you are certain of the answer.\n"
-        # "- If you cannot provide an answer using ONLY the context provided, do not attempt to answer from your own knowledge."
-        # "Instead, inform the user that the answer isn't available in the context and suggest using the available tools {tools}.\n"
-        "- Do not apologize when providing an answer.\n"
-        "- Don't cite the source id in the answer objects, but you can use the source to complete the task.\n\n"
+        "- 回答时使用markdown格式。代码片段使用markdown代码块。\n"
+        "- 回答要简洁明了。\n"
+        "- 如果没有指定语言，使用与用户相同的语言回答。\n"
+        "- 您必须仅使用提供的上下文来完成任务。不要使用任何先验知识或外部信息，即使您确定答案。\n"
+        "- 不要在回答时道歉。\n"
+        "- 不要在答案中引用源ID，但可以使用源来完成任务。\n\n"
     )
 
     context_template = (
@@ -109,11 +104,11 @@ def _define_custom_prompts() -> dict[TemplatePromptName, BasePromptTemplate]:
     # Prompt for chatting directly with LLMs, without any document retrieval stage
     # ---------------------------------------------------------------------------
     system_message_template = (
-        f"Your name is Quivr. You're a helpful assistant. Today's date is {today_date}."
-    )
-    system_message_template += """
-    If not None, also follow these user instructions when answering: {custom_instructions}
+        f"您的名字是 PetrolOnto。您是一个 helpful 的助手。今天的日期是 {today_date}。"
+        """
+    如果提供了以下用户指示，请在回答时也遵循这些指示：{custom_instructions}
     """
+    )
 
     template_answer = """
     用户任务: {task}
@@ -132,14 +127,13 @@ def _define_custom_prompts() -> dict[TemplatePromptName, BasePromptTemplate]:
     # Prompt to understand the user intent
     # ---------------------------------------------------------------------------
     system_message_template = (
-        "Given the following user input, determine the user intent, in particular "
-        "whether the user is providing instructions to the system or is asking the system to "
-        "complete a task:\n"
-        "    - if the user is providing direct instructions to modify the system behaviour (for instance, "
-        "'Can you reply in French?' or 'Answer in French' or 'You are an expert legal assistant' "
-        "or 'You will behave as...'), the user intent is 'prompt';\n"
-        "    - in all other cases (asking questions, asking for summarising a text, asking for translating a text, ...), "
-        "the intent is 'task'.\n"
+        "给定以下用户输入，确定用户意图，特别是"
+        "用户是在提供系统指令还是要求系统完成任务：\n"
+        "    - 如果用户提供直接指令来修改系统行为（例如，"
+        "'你能用法语回复吗？'或'用法语回答'或'你是法律专家助手'"
+        "或'你将表现得像...'），用户意图是'prompt'；\n"
+        "    - 在所有其他情况下（提问、要求总结文本、要求翻译文本等），"
+        "意图是'task'。\n"
     )
 
     template_answer = "用户输入: {task}"
@@ -156,20 +150,19 @@ def _define_custom_prompts() -> dict[TemplatePromptName, BasePromptTemplate]:
     # Prompt to create a system prompt from user instructions
     # ---------------------------------------------------------------------------
     system_message_template = (
-        "- Given the following user instruction, current system prompt, list of available tools "
-        "and list of activated tools, update the prompt to include the instruction and decide which tools to activate.\n"
-        "- The prompt shall only contain generic instructions which can be applied to any user task or question.\n"
-        "- The prompt shall be concise and clear.\n"
-        "- If the system prompt already contains the instruction, do not add it again.\n"
-        "- If the system prompt contradicts ther user instruction, remove the contradictory "
-        "statement or statements in the system prompt.\n"
-        "- You shall return separately the updated system prompt and the reasoning that led to the update.\n"
-        "- If the system prompt refers to a tool, you shall add the tool to the list of activated tools.\n"
-        "- If no tool activation is needed, return empty lists.\n"
-        "- You shall also return the reasoning that led to the tool activation.\n"
-        "- Current system prompt: {system_prompt}\n"
-        "- List of available tools: {available_tools}\n"
-        "- List of activated tools: {activated_tools}\n\n"
+        "- 给定以下用户指示、当前系统提示、可用工具列表和已激活工具列表，"
+        "更新提示以包含该指示并决定激活哪些工具。\n"
+        "- 提示应仅包含可应用于任何用户任务或问题的通用指示。\n"
+        "- 提示应简洁明了。\n"
+        "- 如果系统提示已包含该指示，不要重复添加。\n"
+        "- 如果系统提示与用户指示矛盾，删除系统提示中的矛盾语句。\n"
+        "- 您应分别返回更新的系统提示和导致更新的推理。\n"
+        "- 如果系统提示引用了某个工具，您应将该工具添加到已激活工具列表中。\n"
+        "- 如果不需要激活工具，返回空列表。\n"
+        "- 您还应返回导致工具激活的推理。\n"
+        "- 当前系统提示：{system_prompt}\n"
+        "- 可用工具列表：{available_tools}\n"
+        "- 已激活工具列表：{activated_tools}\n\n"
     )
 
     template_answer = "用户指示: {instruction}\n"
@@ -186,26 +179,24 @@ def _define_custom_prompts() -> dict[TemplatePromptName, BasePromptTemplate]:
     # Prompt to split the user input into multiple questions / instructions
     # ---------------------------------------------------------------------------
     system_message_template = (
-        "Given a chat history and the user input, split and rephrase the input into instructions and tasks.\n"
-        "- Instructions direct the system to behave in a certain way or to use specific tools: examples of instructions are "
-        "'Can you reply in French?', 'Answer in French', 'You are an expert legal assistant', "
-        "'You will behave as...', 'Use web search').\n"
-        "- You shall collect and condense all the instructions into a single string.\n"
-        "- The instructions shall be standalone and self-contained, so that they can be understood "
-        "without the chat history. If no instructions are found, return an empty string.\n"
-        "- Instructions to be understood may require considering the chat history.\n"
-        "- Tasks are often questions, but they can also be summarisation tasks, translation tasks, content generation tasks, etc.\n"
-        "- Tasks to be understood may require considering the chat history.\n"
-        "- If the user input contains different tasks, you shall split the input into multiple tasks.\n"
-        "- Each splitted task shall be a standalone, self-contained task which can be understood "
-        "without the chat history. You shall rephrase the tasks if needed.\n"
-        "- If no explicit task is present, you shall infer the tasks from the user input and the chat history.\n"
-        "- Do NOT try to solve the tasks or answer the questions, "
-        "just reformulate them if needed and otherwise return them as is.\n"
-        "- Remember, you shall NOT suggest or generate new tasks.\n"
-        "- As an example, the user input 'What is Apple? Who is its CEO? When was it founded?' "
-        "shall be split into a list of tasks ['What is Apple?', 'Who is the CEO of Apple?', 'When was Apple founded?']\n"
-        "- If no tasks are found, return the user input as is in the task list.\n"
+        "给定聊天历史和用户输入，将输入拆分并重新表述为指令和任务。\n"
+        "- 指令指导系统以某种方式行为或使用特定工具：指令示例包括"
+        "'你能用法语回复吗？'、'用法语回答'、'你是法律专家助手'、"
+        "'你将表现得像...'、'使用网络搜索'。\n"
+        "- 您应收集并合并所有指令为单个字符串。\n"
+        "- 指令应是独立的和自包含的，以便在没有聊天历史的情况下也能被理解。如果没有找到指令，返回空字符串。\n"
+        "- 要理解的指令可能需要考虑聊天历史。\n"
+        "- 任务通常是问题，但它们也可以是总结任务、翻译任务、内容生成任务等。\n"
+        "- 要理解的任务可能需要考虑聊天历史。\n"
+        "- 如果用户输入包含不同的任务，您应将输入拆分为多个任务。\n"
+        "- 每个拆分后的任务应是独立的、自包含的任务，可以在没有聊天历史的情况下被理解。您应在需要时重新表述任务。\n"
+        "- 如果没有明确的任务存在，您应从用户输入和聊天历史中推断任务。\n"
+        "- 不要尝试解决任务或回答问题，"
+        "只需在需要时重新表述它们，否则按原样返回。\n"
+        "- 请记住，您不应建议或生成新任务。\n"
+        "- 例如，用户输入'什么是苹果？谁是它的CEO？它是什么时候成立的？'"
+        "应拆分为任务列表['什么是苹果？'，'谁是苹果的CEO？'，'苹果是什么时候成立的？']\n"
+        "- 如果没有找到任务，按原样在任务列表中返回用户输入。\n"
     )
 
     template_answer = "用户输入: {user_input}"
@@ -223,17 +214,16 @@ def _define_custom_prompts() -> dict[TemplatePromptName, BasePromptTemplate]:
     # Prompt to grade the relevance of an answer and decide whather to perform a web search
     # ---------------------------------------------------------------------------
     system_message_template = (
-        "Given the following tasks you shall determine whether all tasks can be "
-        "completed fully and in the best possible way using the provided context and chat history. "
-        "You shall:\n"
-        "- Consider each task separately,\n"
-        "- Determine whether the context and chat history contain "
-        "all the information necessary to complete the task.\n"
-        "- If the context and chat history do not contain all the information necessary to complete the task, "
-        "consider ONLY the list of tools below and select the tool most appropriate to complete the task.\n"
-        "- If no tools are listed, return the tasks as is and no tool.\n"
-        "- If no relevant tool can be selected, return the tasks as is and no tool.\n"
-        "- Do not propose to use a tool if that tool is not listed among the available tools.\n"
+        "给定以下任务，您应确定是否可以使用提供的上下文和聊天历史"
+        "充分并以最佳方式完成所有任务。您应：\n"
+        "- 分别考虑每个任务，\n"
+        "- 确定上下文和聊天历史是否包含"
+        "完成任务所需的所有信息。\n"
+        "- 如果上下文和聊天历史不包含完成任务所需的所有信息，"
+        "仅考虑下面的工具列表并选择最适合完成任务的工具。\n"
+        "- 如果没有列出工具，按原样返回任务，不选择工具。\n"
+        "- 如果无法选择相关工具，按原样返回任务，不选择工具。\n"
+        "- 如果工具未在可用工具列表中列出，不要建议使用该工具。\n"
     )
 
     context_template = "上下文: {context}\n {activated_tools}\n"
