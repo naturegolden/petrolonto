@@ -1,4 +1,8 @@
-site_name: Quivr
+site_name: PetrolOnto - Petroleum Ontology Knowledge Platform
+site_url: https://naturegolden.github.io/petrolonto/
+repo_url: https://github.com/naturegolden/petrolonto
+repo_name: naturegolden/petrolonto
+edit_uri: edit/main/docs/docs/
 extra_css:
   - css/style.css
 
