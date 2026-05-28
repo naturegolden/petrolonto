@@ -1,107 +1,107 @@
-# Voice Chatbot with Chainlit
+# 使用 Chainlit 的语音聊天机器人
 
-This example demonstrates how to create a voice-enabled chatbot using **Quivr** and **Chainlit**. The chatbot lets users upload a text file, ask questions about its content, and interact using speech.
-
----
-
-## Prerequisites
-
-- **Python**: Version 3.8 or higher.
-- **OpenAI API Key**: Ensure you have a valid OpenAI API key.
+本示例演示了如何使用 **PetrolOnto** 和 **Chainlit** 创建具有语音功能的聊天机器人。聊天机器人允许用户上传文本文件、基于其内容提问，并通过语音进行交互。
 
 ---
 
-## Installation
+## 前提条件
 
-1. Clone the repository and navigate to the appropriate directory:
+- **Python**：3.8 或更高版本
+- **OpenAI API 密钥**：确保您有有效的 OpenAI API 密钥
+
+---
+
+## 安装
+
+1. 克隆仓库并导航到相应目录：
     ```bash
     git clone https://github.com/QuivrHQ/quivr
     cd examples/chatbot_voice
     ```
 
-2. Set the OpenAI API key as an environment variable:
+2. 将 OpenAI API 密钥设置为环境变量：
     ```bash
     export OPENAI_API_KEY='<your-key-here>'
     ```
 
-3. Install the required dependencies:
+3. 安装所需的依赖：
     ```bash
     pip install -r requirements.lock
     ```
 
 ---
 
-## Running the Chatbot
+## 运行聊天机器人
 
-1. Start the Chainlit server:
+1. 启动 Chainlit 服务器：
     ```bash
     chainlit run main.py
     ```
 
-2. Open your web browser and navigate to the URL displayed in the terminal (default: `http://localhost:8000`).
+2. 打开浏览器并导航到终端中显示的 URL（默认：`http://localhost:8000`）
 
 ---
 
-## Using the Chatbot
+## 使用聊天机器人
 
-### File Upload
+### 文件上传
 
-1. Once the interface loads, the chatbot will prompt you to upload a `.txt` file.
-2. Click on the upload area or drag-and-drop a text file. Ensure the file size is under **20MB**.
-3. After processing, the chatbot will notify you that it’s ready for interaction.
+1. 界面加载后，聊天机器人会提示您上传 `.txt` 文件
+2. 点击上传区域或拖放文本文件，确保文件大小小于 **20MB**
+3. 处理完成后，聊天机器人会通知您已准备好进行交互
 
-### Asking Questions
+### 提问
 
-1. Type your questions in the input box or upload an audio file containing your question.
-2. If using text input, the chatbot will respond with an answer derived from the uploaded file's content.
-3. If using audio input:
-   - The chatbot converts speech to text using OpenAI Whisper.
-   - Processes the text query and provides a response.
-   - Converts the response to audio, enabling hands-free interaction.
-
----
-
-## Features
-
-1. **Text File Processing**: Creates a "brain" for the uploaded file using Quivr for question answering.
-2. **Speech-to-Text (STT)**: Transcribes user-uploaded audio queries using OpenAI Whisper.
-3. **Text-to-Speech (TTS)**: Converts chatbot responses into audio for a seamless voice chat experience.
-4. **Source Display**: Shows relevant file sources for each response.
-5. **Real-Time Updates**: Uses streaming for live feedback during processing.
+1. 在输入框中输入您的问题，或上传包含您问题的音频文件
+2. 如果使用文本输入，聊天机器人将基于上传文件的内容进行回答
+3. 如果使用音频输入：
+   - 聊天机器人使用 OpenAI Whisper 将语音转换为文本
+   - 处理文本查询并提供响应
+   - 将响应转换为音频，实现免提交互
 
 ---
 
-## How It Works
+## 特性
 
-1. **File Upload**: The user uploads a `.txt` file, which is temporarily saved and processed into a "brain" using Quivr.
-2. **Session Handling**: Chainlit manages user sessions to retain the uploaded file and brain context.
-3. **Voice Interaction**:
-    - Audio queries are processed via the OpenAI Whisper API.
-    - Responses are generated and optionally converted into audio for playback.
-4. **Streaming**: The chatbot streams its answers incrementally, improving response speed.
-
----
-
-## Workflow
-
-### Chat Start
-
-1. Waits for a text file upload.
-2. Processes the file into a "brain."
-3. Notifies the user when ready for interaction.
-
-### On User Message
-
-1. Extracts the "brain" and queries it using the message content.
-2. Streams the response back to the user.
-3. Displays file sources related to the response.
-
-### Audio Interaction
-
-1. Captures and processes audio chunks during user input.
-2. Converts captured audio into text using Whisper.
-3. Queries the brain and provides both text and audio responses.
+1. **文本文件处理**：使用 PetrolOnto 为上传的文件创建"大脑"用于问答
+2. **语音转文本（STT）**：使用 OpenAI Whisper 转录用户上传的语音查询
+3. **文本转语音（TTS）**：将聊天机器人响应转换为音频，实现无缝语音体验
+4. **来源展示**：显示每个响应的相关文件来源
+5. **实时更新**：使用流式处理在处理期间提供实时反馈
 
 ---
 
-Enjoy interacting with your documents in both text and voice modes!
+## 工作原理
+
+1. **文件上传**：用户上传 `.txt` 文件，系统临时保存并使用 PetrolOnto 处理为"大脑"
+2. **会话处理**：Chainlit 管理用户会话，保留上传的文件和大脑上下文
+3. **语音交互**：
+   - 语音查询通过 OpenAI Whisper API 处理
+   - 响应生成后 optionally 转换为音频用于播放
+4. **流式处理**：聊天机器人增量返回答案，提高响应速度
+
+---
+
+## 工作流
+
+### 聊天开始
+
+1. 等待文本文件上传
+2. 将文件处理为"大脑"
+3. 通知用户已准备好进行交互
+
+### 收到用户消息
+
+1. 提取"大脑"并使用消息内容进行查询
+2. 将响应流式返回给用户
+3. 显示与响应相关的文件来源
+
+### 音频交互
+
+1. 在用户输入期间捕获和处理音频块
+2. 使用 Whisper 将捕获的音频转换为文本
+3. 查询大脑并提供文本和音频响应
+
+---
+
+享受文本和语音模式下的文档交互体验！

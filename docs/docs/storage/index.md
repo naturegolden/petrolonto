@@ -1,28 +1,28 @@
-# 🗄️ Storage
+# 🗄️ 存储
 
-## Your Brain’s File Management System
+## 大脑的文件管理系统
 
-The `Storage` class is the backbone of how a brain interacts with files in `quivr-core`. Every brain holds a reference to an underlying storage system to manage its files. All storages should implement the `StorageBase` base classe that provides the structure and methods to make that happen seamlessly. Let's walk through how it works:
+`Storage` 类是大脑与 `quivr-core` 中文件交互的核心组件。每个大脑都持有一个对底层存储系统的引用，用于管理其文件。所有存储系统都应实现 `StorageBase` 基类，该基类提供了结构和实现方法。让我们了解它的工作原理：
 
-- **Brain-Storage Connection:** Your brain holds a reference to a storage system. This class is the main way your brain can interact with and manage the files it uses. Adding files to a brain will upload them to the storage. This means that files in the storage are stored **before** processing!
-- **File Management:** the storage holds a set of `QuivrFile` objects, which are the building blocks of your brain’s file system. The storage can store them remotely or locally or hold simple
+- **大脑与存储的连接**：大脑持有一个对存储系统的引用。这是大脑管理和交互文件的主要方式。向大脑添加文件会将它们上传到存储。这意味着存储中的文件在**处理之前**就已存储！
+- **文件管理**：存储持有一组 `QuivrFile` 对象，这些对象是大脑文件系统的基本构建块。存储可以将它们远程或本地存储，或者仅持有简单的引用。
 
-### What can you do with this storage system?
+### 使用存储系统能做什么？
 
-1. Upload Files: You can add new files to your storage whenever you need. The system also lets you decide whether to overwrite existing files or not.
-2. Get Files: Need to see what's in your storage? No problem. You can easily retrieve a list of all the files that are stored.
-3. Delete Files: Clean-up is simple. You can remove any file from your storage by referencing its unique file ID (more on that in `QuivrFile`).
+1. 上传文件：您可以随时向存储添加新文件。系统还允许您决定是否覆盖现有文件。
+2. 获取文件：需要查看存储中的内容吗？没问题。您可以轻松获取所有已存储文件的列表。
+3. 删除文件：清理很简单。您可以通过引用文件的唯一 ID（详见 `QuivrFile`）从存储中删除任何文件。
 
-StorageBase is the foundation of how your brain organizes, uploads, retrieves, and deletes its files. It ensures that your brain can always stay up-to-date with the files it needs, making file management smooth and intuitive. You can build your own storage system by subclassing the `StorageBase` class and passing it to the brain. See [custom_storage](../examples/custom_storage.md) for more details.
+StorageBase 是大脑组织、上传、检索和删除文件的基础。它确保大脑始终能够与所需文件保持同步，使文件管理变得流畅直观。您可以通过继承 `StorageBase` 类并将其传递给大脑来构建自己的存储系统。详见 [自定义存储](../examples/custom_storage.md)。
 
-### Storage Implementations in `quivr_core`
+### `quivr_core` 中的存储实现
 
-`quivr_core` currently offers two storage implementations: `LocalStorage` and `TransparentStorage`:
+`quivr_core` 目前提供两种存储实现：`LocalStorage` 和 `TransparentStorage`：
 
-- **LocalStorage**:  
-  This storage type is perfect when you want to keep files on your local machine. `LocalStorage` saves your files to a specific directory, either a default path (`~/.cache/quivr/files`) or a user-defined location. It can store files by copying them or by creating symbolic links to the original files, based on your preference. This storage type also keeps track of file hashes to prevent accidental overwrites during uploads.
+- **LocalStorage（本地存储）**：  
+  当您希望在本地机器上保存文件时，这种存储类型非常适合。`LocalStorage` 将文件保存到指定目录，可以是默认路径（`~/.cache/quivr/files`）或用户自定义位置。它可以通过复制文件或创建指向原始文件的符号链接来存储文件，具体取决于您的偏好。这种存储类型还会跟踪文件哈希，以防止上传时意外覆盖。
 
-- **TransparentStorage**:  
-  The `TransparentStorage` implementation offers a lightweight and flexible approach, mainly managing files in memory without a need for local file paths. This storage system is useful when you don't need persistent storage but rather an easy way to store and retrieve files temporarily during the brain's operation.
+- **TransparentStorage（透明存储）**：  
+  `TransparentStorage` 实现提供了一种轻量级且灵活的方法，主要在内存中管理文件，无需本地文件路径。当您不需要持久化存储，而是需要一种简单的方法来在大脑运行期间临时存储和检索文件时，这种存储系统非常有用。
 
-Each of these storage systems has its own strengths, catering to different use cases. As `quivr_core` evolves, we will implementat more ande more storage systems allowing for even more advanced and customized ways to manage your files like `S3Storage`, `NFSStorage` ...
+这些存储系统各有优势，适用于不同的使用场景。随着 `quivr_core` 的发展，我们将实现更多存储系统，如 `S3Storage`、`NFSStorage` 等，以实现更高级和定制化的文件管理方式。

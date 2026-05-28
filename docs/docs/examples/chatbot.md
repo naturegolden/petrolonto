@@ -1,105 +1,105 @@
-# Chatbot with Chainlit
+# 使用 Chainlit 的聊天机器人
 
-This example demonstrates a simple chatbot using **Quivr** and **Chainlit**, where users can upload a `.txt` file and ask questions based on its content.
-
----
-
-## Prerequisites
-
-- **Python**: Version 3.8 or higher.
-- **OpenAI API Key**: Ensure you have a valid OpenAI API key.
+本示例演示了一个使用 **PetrolOnto** 和 **Chainlit** 的简单聊天机器人，用户可以上传 `.txt` 文件并基于其内容提问。
 
 ---
 
-## Installation
+## 前提条件
 
-1. Clone the repository and navigate to the appropriate directory:
+- **Python**：3.8 或更高版本
+- **OpenAI API 密钥**：确保您有有效的 OpenAI API 密钥
+
+---
+
+## 安装
+
+1. 克隆仓库并导航到相应目录：
     ```bash
     git clone https://github.com/QuivrHQ/quivr
     cd examples/chatbot
     ```
 
-2. Set the OpenAI API key as an environment variable:
+2. 将 OpenAI API 密钥设置为环境变量：
     ```bash
     export OPENAI_API_KEY='<your-key-here>'
     ```
 
-3. Install the required dependencies:
+3. 安装所需的依赖：
     ```bash
     pip install -r requirements.lock
     ```
 
 ---
 
-## Running the Chatbot
+## 运行聊天机器人
 
-1. Start the Chainlit server:
+1. 启动 Chainlit 服务器：
     ```bash
     chainlit run main.py
     ```
 
-2. Open your web browser and navigate to the URL displayed in the terminal (default: `http://localhost:8000`).
+2. 打开浏览器并导航到终端中显示的 URL（默认：`http://localhost:8000`）
 
 ---
 
-## Using the Chatbot
+## 使用聊天机器人
 
-### File Upload
+### 文件上传
 
-1. On the chatbot interface, upload a `.txt` file when prompted.
-2. Ensure the file size is under **20MB**.
-3. After uploading, the file is processed, and you will be notified when the chatbot is ready.
+1. 在聊天机器人界面，按提示上传 `.txt` 文件
+2. 确保文件大小小于 **20MB**
+3. 上传后，文件将被处理，系统会通知您聊天机器人已准备就绪
 
-### Asking Questions
+### 提问
 
-1. Type your questions into the chat input and press Enter.
-2. The chatbot will respond based on the content of the uploaded file.
-3. Relevant file sources for the answers are displayed in the chat.
-
----
-
-## How It Works
-
-1. **File Upload**:
-    - Users upload a `.txt` file, which is temporarily saved.
-    - The chatbot processes the file using Quivr to create a "brain."
-
-2. **Session Handling**:
-    - Chainlit manages the session to retain the file path and brain context.
-
-3. **Question Answering**:
-    - The chatbot uses the `ask_streaming` method from Quivr to process user queries.
-    - Responses are streamed incrementally for faster feedback.
-    - Relevant file excerpts (sources) are extracted and displayed.
-
-4. **Retrieval Configuration**:
-    - A YAML file (`basic_rag_workflow.yaml`) defines retrieval parameters for Quivr.
+1. 在聊天输入框中输入您的问题并按回车
+2. 聊天机器人将基于上传文件的内容进行回答
+3. 回答的相关文件来源将显示在聊天中
 
 ---
 
-## Workflow
+## 工作原理
 
-### Chat Start
+1. **文件处理**：
+    - 用户上传 `.txt` 文件，系统临时保存
+    - 聊天机器人使用 PetrolOnto 处理文件创建"大脑"
 
-1. Waits for the user to upload a `.txt` file.
-2. Processes the file and creates a "brain."
-3. Notifies the user when the system is ready for questions.
+2. **会话处理**：
+    - Chainlit 管理会话，保留文件路径和大脑上下文
 
-### On User Message
+3. **问答**：
+    - 聊天机器人使用 PetrolOnto 的 `ask_streaming` 方法处理用户查询
+    - 响应以流式方式增量返回，加快反馈速度
+    - 提取并显示相关文件来源
 
-1. Retrieves the "brain" from the session.
-2. Processes the user's question with Quivr.
-3. Streams the response and displays it in the chat.
-4. Extracts and shows relevant sources from the file.
-
----
-
-## Features
-
-1. **File Processing**: Creates a context-aware "brain" from the uploaded file.
-2. **Streaming Responses**: Delivers answers incrementally for better user experience.
-3. **Source Highlighting**: Displays file excerpts relevant to the answers.
+4. **检索配置**：
+    - YAML 文件（`basic_rag_workflow.yaml`）定义 PetrolOnto 的检索参数
 
 ---
 
-Enjoy interacting with your text files in a seamless Q&A format!
+## 工作流
+
+### 聊天开始
+
+1. 等待用户上传 `.txt` 文件
+2. 处理文件并创建"大脑"
+3. 通知用户系统已准备好回答问题
+
+### 收到用户消息
+
+1. 从会话中获取"大脑"
+2. 使用 PetrolOnto 处理用户问题
+3. 流式返回响应并在聊天中显示
+4. 提取并显示文件中的相关来源
+
+---
+
+## 特性
+
+1. **文件处理**：从上传文件创建具有上下文感知的"大脑"
+2. **流式响应**：增量返回答案，提升用户体验
+3. **来源高亮**：显示与答案相关的文件摘录
+
+---
+
+享受流畅的问答式文件交互体验！

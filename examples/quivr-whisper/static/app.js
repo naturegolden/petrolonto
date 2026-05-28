@@ -20,7 +20,7 @@ window.addEventListener("resize", (e) => {
 
 fileInput.addEventListener("change", () => {
   fileName.textContent =
-    fileInput.files.length > 0 ? fileInput.files[0].name : "No file chosen";
+    fileInput.files.length > 0 ? fileInput.files[0].name : "未选择文件";
   fileName.classList.toggle("file-selected", fileInput.files.length > 0);
 });
 
@@ -256,7 +256,7 @@ class RecordingHandler {
     if (!fileInput.files.length) {
       recordBtn.dataset.pending = false;
       recordBtn.disabled = false;
-      alert("Please select a file.");
+      alert("请先选择一个文件。");
       return;
     }
 
@@ -308,12 +308,12 @@ class RecordingHandler {
 }
 
 const uploadFile = async (e) => {
-  uploadBtn.innerText = "Uploading File...";
+  uploadBtn.innerText = "正在上传文件...";
   e.preventDefault();
   const file = fileInput.files[0];
 
   if (!file) {
-    alert("Please select a file.");
+    alert("请选择一个文件。");
     return;
   }
   const formData = new FormData();
@@ -329,7 +329,7 @@ const uploadFile = async (e) => {
     recordBtn.classList.add("hidden");
     fileInputContainer.classList.remove("hidden");
     console.error("Error uploading file:", error);
-    uploadBtn.innerText = "Upload Failed. Try again";
+    uploadBtn.innerText = "上传失败，请重试";
   }
 };
 

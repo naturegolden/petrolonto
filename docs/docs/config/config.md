@@ -1,19 +1,19 @@
-# Configuration
+# 配置
 
-## Retrieval Configuration
+## 检索配置
 ::: quivr_core.rag.entities.config.RetrievalConfig
 
-## Workflow Configuration
+## 工作流配置
 ::: quivr_core.rag.entities.config.WorkflowConfig
 
-## LLM Configuration
+## LLM 配置
 ::: quivr_core.rag.entities.config.LLMEndpointConfig
 
-## Reranker Configuration
+## 重排器配置
 ::: quivr_core.rag.entities.config.RerankerConfig
 
-## Supported LLM Model Suppliers
+## 支持的 LLM 模型供应商
 ::: quivr_core.rag.entities.config.DefaultModelSuppliers
 
-## Supported Rerankers
+## 支持的重排器
 ::: quivr_core.rag.entities.config.DefaultRerankers

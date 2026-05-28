@@ -1,45 +1,45 @@
-# Quivr Chatbot Example
+# PetrolOnto 聊天机器人示例
 
-This example demonstrates how to create a simple chatbot using Quivr and Chainlit. The chatbot allows users to upload a text file and then ask questions about its content.
+本示例演示了如何使用 PetrolOnto 和 Chainlit 创建一个简单的聊天机器人。用户可以上传文本文件，然后基于其内容提问。
 
-## Prerequisites
+## 前提条件
 
-- Python 3.8 or higher
+- Python 3.8 或更高版本
 
-## Installation
+## 安装
 
-1. Clone the repository or navigate to the `backend/core/examples/chatbot` directory.
+1. 克隆仓库或导航到 `backend/core/examples/chatbot` 目录。
 
-2. Install the required dependencies:
+2. 安装所需的依赖：
 
    ```
    pip install -r requirements.txt
    ```
 
-## Running the Chatbot
+## 运行聊天机器人
 
-1. Start the Chainlit server:
+1. 启动 Chainlit 服务器：
 
    ```
    chainlit run main.py
    ```
 
-2. Open your web browser and go to the URL displayed in the terminal (usually `http://localhost:8000`).
+2. 打开浏览器并访问终端中显示的 URL（通常是 `http://localhost:8000`）。
 
-## Using the Chatbot
+## 使用聊天机器人
 
-1. When the chatbot interface loads, you will be prompted to upload a text file.
+1. 当聊天机器人界面加载时，系统会提示您上传一个文本文件。
 
-2. Click on the upload area and select a `.txt` file from your computer. The file size should not exceed 20MB.
+2. 点击上传区域并从计算机中选择一个 `.txt` 文件。文件大小不应超过 20MB。
 
-3. After uploading, the chatbot will process the file and inform you when it's ready.
+3. 上传后，聊天机器人将处理文件并通知您已准备好。
 
-4. You can now start asking questions about the content of the uploaded file.
+4. 您现在可以开始提问关于上传文件内容的问题。
 
-5. Type your questions in the chat input and press Enter. The chatbot will respond based on the information in the uploaded file.
+5. 在聊天输入框中输入您的问题并按回车。聊天机器人将基于上传文件中的信息进行回答。
 
-## How It Works
+## 工作原理
 
-The chatbot uses the Quivr library to create a "brain" from the uploaded text file. This brain is then used to answer questions about the file's content. The Chainlit library provides the user interface and handles the chat interactions.
+聊天机器人使用 PetrolOnto 库从上传的文本文件创建一个"大脑"。这个大脑随后用于回答关于文件内容的问题。Chainlit 库提供用户界面并处理聊天交互。
 
-Enjoy chatting with your documents!
+享受与文档对话的乐趣！

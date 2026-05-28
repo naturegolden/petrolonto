@@ -16,7 +16,7 @@ async def on_chat_start():
     # Wait for the user to upload a file
     while files is None:
         files = await cl.AskFileMessage(
-            content="Please upload a text .txt file to begin!",
+            content="请上传一个文本文件（.txt）以开始！",
             accept=["text/plain"],
             max_size_mb=20,
             timeout=180,
@@ -24,7 +24,7 @@ async def on_chat_start():
 
     file = files[0]
 
-    msg = cl.Message(content=f"Processing `{file.name}`...")
+    msg = cl.Message(content=f"正在处理 `{file.name}`...")
     await msg.send()
 
     with open(file.path, "r", encoding="utf-8") as f:
@@ -43,7 +43,7 @@ async def on_chat_start():
     cl.user_session.set("file_path", temp_file_path)
 
     # Let the user know that the system is ready
-    msg.content = f"Processing `{file.name}` done. You can now ask questions!"
+    msg.content = f"处理 `{file.name}` 完成。您现在可以提问了！"
     await msg.update()
 
     cl.user_session.set("brain", brain)
@@ -52,13 +52,13 @@ async def on_chat_start():
 @cl.on_message
 async def main(message: cl.Message):
 
-    task_list = cl.TaskList(name="State")
-    task_list.status = "Running..."
+    task_list = cl.TaskList(name="状态")
+    task_list.status = "运行中..."
 
-    think = cl.Task(title="Thinking", status=cl.TaskStatus.RUNNING)
+    think = cl.Task(title="思考中", status=cl.TaskStatus.RUNNING)
     await task_list.add_task(think)
 
-    tts = cl.Task(title="Text to speech")
+    tts = cl.Task(title="语音合成")
     await task_list.add_task(tts)
 
     await task_list.send()
@@ -68,11 +68,11 @@ async def main(message: cl.Message):
     retrieval_config = RetrievalConfig.from_yaml(path_config)
 
     if brain is None:
-        await cl.Message(content="Please upload a file first.").send()
+        await cl.Message(content="请先上传一个文件。").send()
         return
 
     # Prepare the message for streaming
-    msg = cl.Message(content="", elements=[], author="Quivr", type="assistant_message")
+    msg = cl.Message(content="", elements=[], author="PetrolOnto", type="assistant_message")
     await msg.send()
 
     saved_sources = set()
@@ -100,18 +100,18 @@ async def main(message: cl.Message):
     for source in saved_sources_complete:
         sources += f"- {source.metadata['original_file_name']}\n"
     msg.elements = elements
-    msg.content = msg.content + f"\n\nSources:\n{sources}"
+    msg.content = msg.content + f"\n\n来源：\n{sources}"
     await msg.update()
 
     tts.status = cl.TaskStatus.DONE
-    task_list.status = "Done"
+    task_list.status = "已完成"
     await task_list.update()
     await cl.sleep(1)
     await task_list.remove()
 
 async_openai_client = AsyncOpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 
-@cl.step(type="tool", name="Speech to text")
+@cl.step(type="tool", name="语音转文本")
 async def speech_to_text(audio_file):
     response = await async_openai_client.audio.transcriptions.create(
         model="whisper-1", file=audio_file
@@ -119,7 +119,7 @@ async def speech_to_text(audio_file):
 
     return response.text
 
-@cl.step(type="tool", name="Text to speech")
+@cl.step(type="tool", name="文本转语音")
 async def text_to_speech(text):
     response = await async_openai_client.audio.speech.create(
         model="tts-1", voice="alloy", input=text
@@ -145,10 +145,10 @@ async def on_audio_chunk(chunk: cl.AudioChunk):
 @cl.on_audio_end
 async def on_audio_end(elements: list[Element]):
     # Get the audio buffer from the session
-    task_list = cl.TaskList(name="State")
-    task_list.status = "Running..."
+    task_list = cl.TaskList(name="状态")
+    task_list.status = "运行中..."
 
-    stt = cl.Task(title="Speech to text", status=cl.TaskStatus.RUNNING)
+    stt = cl.Task(title="语音转文本", status=cl.TaskStatus.RUNNING)
     await task_list.add_task(stt)
 
     await task_list.send()
@@ -174,7 +174,7 @@ async def on_audio_end(elements: list[Element]):
     msg = cl.Message(author="You", content=transcription, elements=elements)
 
     stt.status = cl.TaskStatus.DONE
-    task_list.status = "Done"
+    task_list.status = "已完成"
     await task_list.update()
     await cl.sleep(1)
     await task_list.remove()

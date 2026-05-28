@@ -1,21 +1,21 @@
-# Brain
+# 🧠 大脑
 
-The brain is the essential component of Quivr that stores and processes the knowledge you want to retrieve informations from. Simply create a brain with the files you want to process and use the latest Quivr RAG workflow to retrieve informations from the knowledge.
+大脑是 PetrolOnto 的核心组件，用于存储和处理您想要检索信息的知识。只需使用您想要处理的文件创建大脑，然后使用最新的 PetrolOnto RAG 工作流从知识中检索信息。
 
-Quick Start 🪄:
+快速开始 🪄：
 
 ```python
 from quivr_core import Brain
 from quivr_core.quivr_rag_langgraph import QuivrQARAGLangGraph
 
 
-brain = Brain.from_files(name="My Brain", file_paths=["file1.pdf", "file2.pdf"])
-answer = brain.ask("What is Quivr ?")
-print("Answer Quivr :", answer.answer)
+brain = Brain.from_files(name="我的大脑", file_paths=["file1.pdf", "file2.pdf"])
+answer = brain.ask("什么是 PetrolOnto？")
+print("PetrolOnto 回答：", answer.answer)
 
 ```
 
-Pimp your Brain 🔨 :
+定制你的大脑 🔨：
 
 ```python
 from quivr_core import Brain
@@ -25,18 +25,18 @@ from quivr_core.llm.llm_endpoint import LLMEndpointConfig
 from quivr_core.llm.llm_endpoint import FakeListChatModel
 
 brain = Brain.from_files(
-        name="test_brain",
-        file_paths=["my/information/source/file.pdf"],
+        name="测试大脑",
+        file_paths=["我的信息源文件.pdf"],
         llm=LLMEndpoint(
-            llm=FakeListChatModel(responses=["good"]),
+            llm=FakeListChatModel(responses=["好的"]),
             llm_config=LLMEndpointConfig(model="fake_model", llm_base_url="local"),
         ),
         embedder=DeterministicFakeEmbedding(size=20),
     )
 
 answer = brain.ask(
-            "What is Quivr ?"
+            "什么是 PetrolOnto？"
         )
-print("Answer Quivr :", answer.answer)
+print("PetrolOnto 回答：", answer.answer)
 
 ```

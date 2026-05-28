@@ -1,4 +1,4 @@
-# Configuration Base Class
+# 配置基类
 
 ::: quivr_core.base_config
     options:

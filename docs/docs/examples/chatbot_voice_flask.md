@@ -1,114 +1,114 @@
-# Voice Chatbot with Flask
+# 使用 Flask 的语音聊天机器人
 
-This example demonstrates a simple chatbot using **Flask** and **Quivr**, where users can upload a `.txt` file and ask questions based on its content. It supports speech-to-text and text-to-speech capabilities for a seamless interactive experience.
+本示例演示了一个使用 **Flask** 和 **PetrolOnto** 的简单聊天机器人，用户可以上传 `.txt` 文件并基于其内容提问。它支持语音转文本和文本转语音功能，提供流畅的交互体验。
 
 <video style="width:100%" muted="" controls="" alt="type:video">
    <source src="../assets/chatbot_voice_flask.mp4" type="video/mp4">
 </video>
 ---
 
-## Prerequisites
+## 前提条件
 
-- **Python**: Version 3.8 or higher.
-- **OpenAI API Key**: Ensure you have a valid OpenAI API key.
+- **Python**：3.8 或更高版本
+- **OpenAI API 密钥**：确保您有有效的 OpenAI API 密钥
 
 ---
 
-## Installation
+## 安装
 
-1. Clone the repository and navigate to the project directory:
+1. 克隆仓库并导航到项目目录：
     ```bash
     git clone https://github.com/QuivrHQ/quivr
     cd examples/quivr-whisper
     ```
 
-2. Set the OpenAI API key as an environment variable:
+2. 将 OpenAI API 密钥设置为环境变量：
     ```bash
     export OPENAI_API_KEY='<your-key-here>'
     ```
 
-3. Install the required dependencies:
+3. 安装所需的依赖：
     ```bash
     pip install -r requirements.lock
     ```
 
 ---
 
-## Running the Application
+## 运行应用
 
-1. Start the Flask server:
+1. 启动 Flask 服务器：
     ```bash
     python app.py
     ```
 
-2. Open your web browser and navigate to the URL displayed in the terminal (default: `http://localhost:5000`).
+2. 打开浏览器并导航到终端中显示的 URL（默认：`http://localhost:5000`）
 
 ---
 
-## Using the Chatbot
+## 使用聊天机器人
 
-### File Upload
+### 文件上传
 
-1. On the interface, upload a `.txt` file.
-2. Ensure the file format is supported and its size is manageable.
-3. The file will be processed, and a "brain" instance will be created.
+1. 在界面中，上传一个 `.txt` 文件
+2. 确保文件格式受支持且大小合理
+3. 文件将被处理，并创建一个"大脑"实例
 
-### Asking Questions
+### 提问
 
-1. Use the microphone to record your question (audio upload).
-2. The chatbot will process your question and respond with an audio answer.
-
----
-
-## How It Works
-
-### File Upload
-- Users upload a `.txt` file.
-- The file is saved to the `uploads` directory and used to create a "brain" using **Quivr**.
-
-### Session Management
-- Each session is associated with a unique ID, allowing the system to cache the user's "brain."
-
-### Speech-to-Text
-- User audio files are processed with OpenAI's **Whisper** model to generate transcripts.
-
-### Question Answering
-- The "brain" processes the transcribed text, retrieves relevant answers, and generates a response.
-
-### Text-to-Speech
-- The answer is converted to audio using OpenAI's text-to-speech model and returned to the user.
+1. 使用麦克风录制您的问题（音频上传）
+2. 聊天机器人将处理您的问题并以音频形式回答
 
 ---
 
-## Workflow
+## 工作原理
 
-1. **Upload File**:
-    - The user uploads a `.txt` file.
-    - A "brain" is created and cached for the session.
+### 文件上传
+- 用户上传 `.txt` 文件
+- 文件保存到 `uploads` 目录，并使用 **PetrolOnto** 创建"大脑"
 
-2. **Ask Questions**:
-    - The user uploads an audio file containing a question.
-    - The question is transcribed, processed, and answered using the "brain."
+### 会话管理
+- 每个会话都有唯一 ID，系统可以缓存用户的"大脑"
 
-3. **Answer Delivery**:
-    - The answer is converted to audio and returned to the user as a Base64-encoded string.
+### 语音转文本
+- 用户使用 OpenAI 的 **Whisper** 模型生成转录文本
 
----
+### 问答
+- "大脑"处理转录文本，检索相关答案并生成响应
 
-## Features
-
-1. **File Upload and Processing**:
-    - Creates a context-aware "brain" from the uploaded text file.
-
-2. **Audio-based Interaction**:
-    - Supports speech-to-text for input and text-to-speech for responses.
-
-3. **Session Management**:
-    - Retains user context throughout the interaction.
-
-4. **Integration with OpenAI**:
-    - Uses OpenAI models for transcription, answer generation, and audio synthesis.
+### 文本转语音
+- 答案使用 OpenAI 的文本转语音模型转换为音频并返回给用户
 
 ---
 
-Enjoy interacting with your text files through an intuitive voice-based interface!
+## 工作流
+
+1. **上传文件**：
+    - 用户上传 `.txt` 文件
+    - 创建"大脑"并为会话缓存
+
+2. **提问**：
+    - 用户上传包含问题的音频文件
+    - 问题被转录，使用"大脑"处理并回答
+
+3. **答案传递**：
+    - 答案转换为音频并以 Base64 编码字符串形式返回给用户
+
+---
+
+## 特性
+
+1. **文件上传和处理**：
+    - 从上传的文本文件创建具有上下文感知的"大脑"
+
+2. **音频交互**：
+    - 支持语音转文本输入和文本转语音响应
+
+3. **会话管理**：
+    - 在整个交互过程中保留用户上下文
+
+4. **与 OpenAI 集成**：
+    - 使用 OpenAI 模型进行转录、答案生成和音频合成
+
+---
+
+通过直观的语音界面享受与文本文件交互的乐趣！

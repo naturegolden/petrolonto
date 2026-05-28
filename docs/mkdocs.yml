@@ -1,4 +1,4 @@
-site_name: PetrolOnto - Petroleum Ontology Knowledge Platform
+site_name: PetrolOnto - 石油本体知识平台
 site_url: https://naturegolden.github.io/petrolonto/
 repo_url: https://github.com/naturegolden/petrolonto
 repo_name: naturegolden/petrolonto
@@ -32,24 +32,28 @@ theme:
     - media: (prefers-color-scheme)
       toggle:
         icon: material/brightness-auto
-        name: Switch to light mode
+        name: 切换到浅色模式
     - accent: purple
       media: "(prefers-color-scheme: light)"
       primary: white
       scheme: default
       toggle:
         icon: material/brightness-7
-        name: Switch to dark mode
+        name: 切换到深色模式
     - accent: purple
       media: "(prefers-color-scheme: dark)"
       primary: black
       scheme: slate
       toggle:
         icon: material/brightness-4
-        name: Switch to system preference
+        name: 跟随系统设置
+  language: zh
 
 plugins:
-  - search
+  - search:
+      lang:
+        - zh
+        - en
   - mkdocstrings:
       default_handler: python
       handlers:
@@ -61,39 +65,39 @@ plugins:
             separate_signature: true
 
 nav:
-  - Home:
+  - 首页:
       - index.md
       - quickstart.md
-      - Brain:
+      - 🧠 大脑:
           - brain/index.md
           - brain/brain.md
           - brain/chat.md
-      - Storage:
+      - 🗄️ 存储:
           - storage/index.md
           - storage/base.md
           - storage/local_storage.md
-      - Parsers:
+      - 🔍 解析器:
           - parsers/index.md
           - parsers/megaparse.md
           - parsers/simple.md
-      - Vector Stores:
+      - 📊 向量存储:
           - vectorstores/index.md
           - vectorstores/faiss.md
           - vectorstores/pgvector.md
-      - Workflows:
+      - 🔄 工作流:
           - workflows/index.md
-          - Examples:
+          - 示例:
               - workflows/examples/basic_ingestion.md
               - workflows/examples/basic_rag.md
               - workflows/examples/rag_with_web_search.md
-      - Configuration:
+      - ⚙️ 配置:
           - config/index.md
           - config/config.md
           - config/base_config.md
-      - Examples:
+      - 💡 示例:
           - examples/index.md
           - examples/custom_storage.md
           - examples/chatbot.md
           - examples/chatbot_voice.md
           - examples/chatbot_voice_flask.md
-  - Enterprise: https://docs.quivr.app/
+  - 企业版: https://docs.quivr.app/

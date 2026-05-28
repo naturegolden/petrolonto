@@ -1,30 +1,28 @@
-# Basic ingestion
+# 基础数据摄入
 
 ![](basic_ingestion.excalidraw.png)
 
+创建如上所示的基础数据摄入工作流非常简单，请按照以下步骤操作：
 
-Creating a basic ingestion workflow like the one above is simple, here are the steps:
-
-1. Add your API Keys to your environment variables
+1. 将 API 密钥添加到环境变量
 ```python
 import os
 os.environ["OPENAI_API_KEY"] = "myopenai_apikey"
-
 ```
-Check our `.env.example` file to see the possible environment variables you can configure. Quivr supports APIs from Anthropic, OpenAI, and Mistral. It also supports local models using Ollama.
+查看我们的 `.env.example` 文件以了解可以配置的环境变量。PetrolOnto 支持 Anthropic、OpenAI 和 Mistral 的 API。还支持使用 Ollama 的本地模型。
 
-2. Create the YAML file ``basic_ingestion_workflow.yaml`` and copy the following content in it
+2. 创建 YAML 文件 `basic_ingestion_workflow.yaml` 并将以下内容复制到其中
 ```yaml
 parser_config:
   megaparse_config:
-    strategy: "auto" # for unstructured, it can be "auto", "fast", "hi_res", "ocr_only", see https://docs.unstructured.io/open-source/concepts/partitioning-strategies#partitioning-strategies
+    strategy: "auto" # 对于 unstructured，可以是 "auto", "fast", "hi_res", "ocr_only"
     pdf_parser: "unstructured"
   splitter_config:
-    chunk_size: 400 # in tokens
-    chunk_overlap: 100 # in tokens
+    chunk_size: 400 # 以令牌为单位
+    chunk_overlap: 100 # 以令牌为单位
 ```
 
-3. Create a Brain using the above configuration and the list of files you want to ingest
+3. 使用上述配置和您要摄入的文件列表创建大脑
 ```python
 from quivr_core import Brain
 from quivr_core.config import IngestionConfig
@@ -38,14 +36,13 @@ processor_kwargs = {
     "splitter_config": ingestion_config.parser_config.splitter_config,
 }
 
-brain = Brain.from_files(name = "my smart brain",
-                        file_paths = ["./my_first_doc.pdf", "./my_second_doc.txt"],
+brain = Brain.from_files(name = "我的智能大脑",
+                        file_paths = ["./我的第一个文档.pdf", "./我的第二个文档.txt"],
                         processor_kwargs=processor_kwargs,
                         )
-
 ```
 
-4. Launch a Chat
+4. 启动聊天
 ```python
 brain.print_info()
 
@@ -54,24 +51,24 @@ from rich.panel import Panel
 from rich.prompt import Prompt
 
 console = Console()
-console.print(Panel.fit("Ask your brain !", style="bold magenta"))
+console.print(Panel.fit("向你的大脑提问！", style="bold magenta"))
 
 while True:
-    # Get user input
-    question = Prompt.ask("[bold cyan]Question[/bold cyan]")
+    # 获取用户输入
+    question = Prompt.ask("[bold cyan]问题[/bold cyan]")
 
-    # Check if user wants to exit
+    # 检查用户是否想退出
     if question.lower() == "exit":
-        console.print(Panel("Goodbye!", style="bold yellow"))
+        console.print(Panel("再见！", style="bold yellow"))
         break
 
     answer = brain.ask(question)
-    # Print the answer with typing effect
-    console.print(f"[bold green]Quivr Assistant[/bold green]: {answer.answer}")
+    # 打印答案
+    console.print(f"[bold green]PetrolOnto 助手[/bold green]: {answer.answer}")
 
     console.print("-" * console.width)
 
 brain.print_info()
 ```
 
-5. You are now all set up to talk with your brain and test different chunking strategies by simply changing the configuration file!
+5. 现在您已经可以与大脑对话了，只需更改配置文件即可测试不同的分块策略！

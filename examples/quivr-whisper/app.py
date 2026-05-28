@@ -67,7 +67,7 @@ async def upload_file():
 
     print(f"File uploaded and saved at: {filepath}")
 
-    print("Creating brain instance...")
+    print("正在创建大脑...")
 
     brain: Brain = await to_thread(
         run_in_event_loop, Brain.from_files, name="user_brain", file_paths=[filepath]
@@ -78,9 +78,9 @@ async def upload_file():
     session["session_id"] = session_id
     # cache.set(session_id, brain)  # Store the brain instance in the cache
     brains[session_id] = brain
-    print(f"Brain instance created and stored in cache for session ID: {session_id}")
+    print(f"大脑实例已创建并缓存，会话ID: {session_id}")
 
-    return jsonify({"message": "Brain created successfully"})
+    return jsonify({"message": "大脑创建成功"})
 
 
 @app.route("/ask", methods=["POST"])
@@ -97,20 +97,20 @@ async def ask():
     if not brain:
         return "Brain instance not found in dict. Upload a file first.", 400
 
-    print("Brain instance loaded from cache.")
+    print("已加载大脑实例。")
 
-    print("Speech to text...")
+    print("语音转文本...")
     audio_file = request.files["audio_data"]
     transcript = transcribe_audio_file(audio_file)
-    print("Transcript result: ", transcript)
+    print("转写结果: ", transcript)
 
-    print("Getting response...")
+    print("获取回答...")
     quivr_response = await to_thread(run_in_event_loop, brain.ask, transcript)
 
-    print("Text to speech...")
+    print("文本转语音...")
     audio_base64 = synthesize_speech(quivr_response.answer)
 
-    print("Done")
+    print("完成")
     return jsonify({"audio_base64": audio_base64})
 
 

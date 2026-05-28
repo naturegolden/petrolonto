@@ -1,26 +1,24 @@
-# Quick start
+# 快速开始
 
-If you need to quickly start talking to your list of files, here are the steps.
+如果您需要快速开始与文件列表对话，请按照以下步骤操作。
 
-1. Add your API Keys to your environment variables
+1. 将 API 密钥添加到环境变量
 ```python
 import os
 os.environ["OPENAI_API_KEY"] = "myopenai_apikey"
-
 ```
-Check our `.env.example` file to see the possible environment variables you can configure. Quivr supports APIs from Anthropic, OpenAI, and Mistral. It also supports local models using Ollama.
+查看我们的 `.env.example` 文件以了解可以配置的环境变量。PetrolOnto 支持 Anthropic、OpenAI 和 Mistral 的 API。还支持使用 Ollama 的本地模型。
 
-2. Create a Brain with Quivr default configuration
+2. 使用 PetrolOnto 默认配置创建大脑
 ```python
 from quivr_core import Brain
 
-brain = Brain.from_files(name = "my smart brain",
-                        file_paths = ["/my_smart_doc.pdf", "/my_intelligent_doc.txt"],
+brain = Brain.from_files(name = "我的智能大脑",
+                        file_paths = ["/我的智能文档.pdf", "/我的聪明文档.txt"],
                         )
-
 ```
 
-3. Launch a Chat
+3. 启动聊天
 ```python
 brain.print_info()
 
@@ -29,38 +27,38 @@ from rich.panel import Panel
 from rich.prompt import Prompt
 
 console = Console()
-console.print(Panel.fit("Ask your brain !", style="bold magenta"))
+console.print(Panel.fit("向你的大脑提问！", style="bold magenta"))
 
 while True:
-    # Get user input
-    question = Prompt.ask("[bold cyan]Question[/bold cyan]")
+    # 获取用户输入
+    question = Prompt.ask("[bold cyan]问题[/bold cyan]")
 
-    # Check if user wants to exit
+    # 检查用户是否想退出
     if question.lower() == "exit":
-        console.print(Panel("Goodbye!", style="bold yellow"))
+        console.print(Panel("再见！", style="bold yellow"))
         break
 
     answer = brain.ask(question)
-    # Print the answer with typing effect
-    console.print(f"[bold green]Quivr Assistant[/bold green]: {answer.answer}")
+    # 打印答案
+    console.print(f"[bold green]PetrolOnto 助手[/bold green]: {answer.answer}")
 
     console.print("-" * console.width)
 
 brain.print_info()
 ```
 
-And now you are all set up to talk with your brain !
+现在您已经可以与大脑对话了！
 
-## Custom Brain
-If you want to change the language or embeddings model, you can modify the parameters of the brain.
+## 自定义大脑
+如果您想更改语言模型或嵌入模型，可以修改大脑的参数。
 
-Let's say you want to use a LLM from Mistral and a specific embedding model :
+假设您想使用 Mistral 的 LLM 和特定的嵌入模型：
 ```python
 from quivr_core import Brain
 from langchain_core.embeddings import Embeddings
 
-brain = Brain.from_files(name = "my smart brain",
-                        file_paths = ["/my_smart_doc.pdf", "/my_intelligent_doc.txt"],
+brain = Brain.from_files(name = "我的智能大脑",
+                        file_paths = ["/我的智能文档.pdf", "/我的聪明文档.txt"],
                         llm=LLMEndpoint(
                             llm_config=LLMEndpointConfig(model="mistral-small-latest", llm_base_url="https://api.mistral.ai/v1/chat/completions"),
                         ),
@@ -68,16 +66,16 @@ brain = Brain.from_files(name = "my smart brain",
                         )
 ```
 
-Note : [Embeddings](https://python.langchain.com/docs/integrations/text_embedding/) is a langchain class that lets you chose from a large variety of embedding models. Please check out the following docs to know the panel of models you can try.
+注意：[Embeddings](https://python.langchain.com/docs/integrations/text_embedding/) 是一个 LangChain 类，允许您从多种嵌入模型中选择。请查看以下文档以了解可以尝试的模型。
 
-## Launch with Chainlit
+## 使用 Chainlit 启动
 
-If you want to quickly launch an interface with streamlit, you can simply do at the root of the project :
+如果您想快速启动界面，可以在项目根目录执行：
 ```bash
-cd examples/chatbot /
-rye sync /
+cd examples/chatbot
+rye sync
 rye run chainlit run chainlit.py
 ```
-For more detail, go in [examples/chatbot/chainlit.md](https://github.com/QuivrHQ/quivr/tree/main/examples/chatbot)
+更多详情，请参阅 [examples/chatbot/chainlit.md](https://github.com/QuivrHQ/quivr/tree/main/examples/chatbot)
 
-Note : Modify the Brain configs directly in examples/chatbot/main.py;
+注意：直接在 examples/chatbot/main.py 中修改大脑配置。

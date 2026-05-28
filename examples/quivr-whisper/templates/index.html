@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Audio Interaction WebApp</title>
+    <title>语音交互应用</title>
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='styles.css') }}"
@@ -19,7 +19,7 @@
       data-pending="false"
     ></button>
     <div class="custom-file-input">
-      <label for="fileInput">Choose a file</label>
+      <label for="fileInput">选择文件</label>
       <input
         type="file"
         accept="text/plain"
@@ -27,8 +27,8 @@
         required
         id="fileInput"
       />
-      <span id="fileName">No file chosen</span>
-      <button id="upload-btn" class="upload-btn">Upload</button>
+      <span id="fileName">未选择文件</span>
+      <button id="upload-btn" class="upload-btn">上传</button>
     </div>
     <canvas id="audio-visualizer" class=""></canvas>
     <audio id="audio-playback" controls class="hidden"></audio>

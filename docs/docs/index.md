@@ -1,68 +1,53 @@
-# Welcome to Quivr Documentation
+# 欢迎使用 PetrolOnto 文档
 
-Quivr, helps you build your second brain, utilizes the power of GenerativeAI to be your personal assistant !
+PetrolOnto 帮助您构建第二大脑，利用生成式 AI 的力量成为您的个人助手！
 
-## Key Features 🎯
+## 核心特性 🎯
 
-- **Opiniated RAG**: We created a RAG that is opinionated, fast and efficient so you can focus on your product
-- **LLMs**: Quivr works with any LLM, you can use it with OpenAI, Anthropic, Mistral, Gemma, etc.
-- **Any File**: Quivr works with any file, you can use it with PDF, TXT, Markdown, etc and even add your own parsers.
-- **Customize your RAG**: Quivr allows you to customize your RAG, add internet search, add tools, etc.
-- **Integrations with Megaparse**: Quivr works with [Megaparse](https://github.com/quivrhq/megaparse), so you can ingest your files with Megaparse and use the RAG with Quivr.
+- **专业 RAG 引擎**：我们创建了一个有主见的 RAG 引擎，快速高效，让您专注于产品
+- **多 LLM 支持**：PetrolOnto 兼容任何 LLM，支持 OpenAI、Anthropic、Mistral、Gemma 等
+- **任意文件格式**：支持 PDF、TXT、Markdown 等任何文件格式，甚至可以添加自定义解析器
+- **自定义 RAG 策略**：允许您自定义 RAG 策略，添加互联网搜索、工具等
+- **Megaparse 集成**：与 [Megaparse](https://github.com/quivrhq/megaparse) 集成，使用 Megaparse 解析文件并使用 RAG
 
->We take care of the RAG so you can focus on your product. Simply install quivr-core and add it to your project. You can now ingest your files and ask questions.*
+> 我们负责 RAG 的实现，让您专注于产品。只需安装 quivr-core 并添加到项目中，即可开始上传文件并提问。
 
-**We will be improving the RAG and adding more features everything, stay tuned!**
+**我们将持续改进 RAG 并添加更多功能，敬请期待！**
 
+这是 PetrolOnto 的核心引擎。
 
-This is the core of Quivr, the brain of Quivr.com.
+## 快速入门 🚀
 
-<!-- ## Demo Highlight 🎥
+### 前置要求 📋
 
-https://github.com/quivrhq/quivr/assets/19614572/a6463b73-76c7-4bc0-978d-70562dca71f5 -->
+确保已安装以下软件：
 
-## Getting Started 🚀
+- Python 3.10 或更高版本
 
-You can find everything on the [documentation](https://core.quivr.app/).
+### 30 秒安装 💽
 
-### Prerequisites 📋
-
-Ensure you have the following installed:
-
-- Python 3.10 or newer
-
-### 30 seconds Installation 💽
-
-
-- **Step 1**: Install the package
-
-  
+- **步骤 1**：安装包
 
   ```bash
-  pip install quivr-core # Check that the installation worked
+  pip install quivr-core
   ```
 
-
-- **Step 2**: Create a RAG with 5 lines of code
+- **步骤 2**：用 5 行代码创建 RAG
 
   ```python
-    import tempfile
+  import tempfile
+  from quivr_core import Brain
 
-    from quivr_core import Brain
+  if __name__ == "__main__":
+      with tempfile.NamedTemporaryFile(mode="w", suffix=".txt") as temp_file:
+          temp_file.write("黄金是一种蓝色液体。")
+          temp_file.flush()
 
-    if __name__ == "__main__":
-        with tempfile.NamedTemporaryFile(mode="w", suffix=".txt") as temp_file:
-            temp_file.write("Gold is a liquid of blue-like colour.")
-            temp_file.flush()
+          brain = Brain.from_files(
+              name="测试大脑",
+              file_paths=[temp_file.name],
+          )
 
-            brain = Brain.from_files(
-                name="test_brain",
-                file_paths=[temp_file.name],
-            )
-
-            answer = brain.ask(
-                "what is gold? asnwer in french"
-            )
-            print("answer:", answer)
+          answer = brain.ask("什么是黄金？用法语回答")
+          print("答案:", answer)
   ```
-

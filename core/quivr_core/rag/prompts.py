@@ -42,7 +42,7 @@ def _define_custom_prompts() -> dict[TemplatePromptName, BasePromptTemplate]:
         "Do not output your reasoning, just the task."
     )
 
-    template_answer = "User task: {task}\n Standalone task:"
+    template_answer = "用户任务: {task}\n 独立任务:"
 
     CONDENSE_TASK_PROMPT = ChatPromptTemplate.from_messages(
         [
@@ -73,29 +73,18 @@ def _define_custom_prompts() -> dict[TemplatePromptName, BasePromptTemplate]:
 
     context_template = (
         "\n"
-        # "- You have access to the following internal reasoning to provide an answer: {reasoning}\n"
-        "- You have access to the following files to complete the task (limited to first 20 files): {files}\n"
-        "- You have access to the following context to complete the task: {context}\n"
-        "- Follow these user instruction when crafting the answer: {custom_instructions}\n"
-        "- These user instructions shall take priority over any other previous instruction.\n"
-        # "- Remember: if you cannot provide an answer using ONLY the provided context and CITING the sources, "
-        # "inform the user that you don't have the answer and consider if any of the tools can help answer the question.\n"
-        # "- Explain your reasoning about the potentiel tool usage in the answer.\n"
-        # "- Only use binded tools to answer the question.\n"
-        # "OFFER the user the possibility to ACTIVATE a relevant tool among "
-        # "the tools which can be activated."
-        # "Tools which can be activated: {tools}. If any of these tools can help in providing an answer "
-        # "to the user question, you should offer the user the possibility to activate it. "
-        # "Remember, you shall NOT use the above tools, ONLY offer the user the possibility to activate them.\n"
+        "- 您可以访问以下文件来完成任务（最多前20个文件）: {files}\n"
+        "- 您可以访问以下上下文来完成任务: {context}\n"
+        "- 在生成答案时请遵循以下用户指示: {custom_instructions}\n"
+        "- 这些用户指示应优先于任何其他先前指示。\n"
     )
 
     template_answer = (
-        "Original task: {task}\n"
-        "Rephrased and contextualized task: {rephrased_task}\n"
-        "Remember, you shall complete ALL tasks.\n"
-        "Remember: if you cannot provide an answer using ONLY the provided context and CITING the sources, "
-        "just answer that you don't have the answer.\n"
-        "If the provided context contains contradictory or conflicting information, state so providing the conflicting information.\n"
+        "原始任务: {task}\n"
+        "重述并上下文化的任务: {rephrased_task}\n"
+        "请记住，您必须完成所有任务。\n"
+        "请记住：如果无法仅使用提供的上下文和引用来源来提供答案，请直接回答没有答案。\n"
+        "如果提供的上下文包含矛盾或冲突的信息，请指出并提供冲突的信息。\n"
     )
 
     RAG_ANSWER_PROMPT = ChatPromptTemplate.from_messages(
@@ -112,7 +101,7 @@ def _define_custom_prompts() -> dict[TemplatePromptName, BasePromptTemplate]:
     # Prompt for formatting documents
     # ---------------------------------------------------------------------------
     DEFAULT_DOCUMENT_PROMPT = PromptTemplate.from_template(
-        template="Filename: {original_file_name}\nSource: {index} \n {page_content}"
+        template="文件名: {original_file_name}\n来源: {index} \n {page_content}"
     )
     custom_prompts[TemplatePromptName.DEFAULT_DOCUMENT_PROMPT] = DEFAULT_DOCUMENT_PROMPT
 
@@ -127,8 +116,8 @@ def _define_custom_prompts() -> dict[TemplatePromptName, BasePromptTemplate]:
     """
 
     template_answer = """
-    User Task: {task}
-    Answer:
+    用户任务: {task}
+    回答:
     """
     CHAT_LLM_PROMPT = ChatPromptTemplate.from_messages(
         [
@@ -153,7 +142,7 @@ def _define_custom_prompts() -> dict[TemplatePromptName, BasePromptTemplate]:
         "the intent is 'task'.\n"
     )
 
-    template_answer = "User input: {task}"
+    template_answer = "用户输入: {task}"
 
     USER_INTENT_PROMPT = ChatPromptTemplate.from_messages(
         [
@@ -183,7 +172,7 @@ def _define_custom_prompts() -> dict[TemplatePromptName, BasePromptTemplate]:
         "- List of activated tools: {activated_tools}\n\n"
     )
 
-    template_answer = "User instructions: {instruction}\n"
+    template_answer = "用户指示: {instruction}\n"
 
     UPDATE_PROMPT = ChatPromptTemplate.from_messages(
         [
@@ -219,7 +208,7 @@ def _define_custom_prompts() -> dict[TemplatePromptName, BasePromptTemplate]:
         "- If no tasks are found, return the user input as is in the task list.\n"
     )
 
-    template_answer = "User input: {user_input}"
+    template_answer = "用户输入: {user_input}"
 
     SPLIT_PROMPT = ChatPromptTemplate.from_messages(
         [
@@ -247,9 +236,9 @@ def _define_custom_prompts() -> dict[TemplatePromptName, BasePromptTemplate]:
         "- Do not propose to use a tool if that tool is not listed among the available tools.\n"
     )
 
-    context_template = "Context: {context}\n {activated_tools}\n"
+    context_template = "上下文: {context}\n {activated_tools}\n"
 
-    template_answer = "Tasks: {tasks}\n"
+    template_answer = "任务: {tasks}\n"
 
     TOOL_ROUTING_PROMPT = ChatPromptTemplate.from_messages(
         [

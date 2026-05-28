@@ -12,7 +12,7 @@ async def on_chat_start():
     # Wait for the user to upload a file
     while files is None:
         files = await cl.AskFileMessage(
-            content="Please upload a text .txt file to begin!",
+            content="请上传一个文本文件（.txt）以开始！",
             accept=["text/plain"],
             max_size_mb=20,
             timeout=180,
@@ -20,7 +20,7 @@ async def on_chat_start():
 
     file = files[0]
 
-    msg = cl.Message(content=f"Processing `{file.name}`...")
+    msg = cl.Message(content=f"正在处理 `{file.name}`...")
     await msg.send()
 
     with open(file.path, "r", encoding="utf-8") as f:
@@ -39,7 +39,7 @@ async def on_chat_start():
     cl.user_session.set("file_path", temp_file_path)
 
     # Let the user know that the system is ready
-    msg.content = f"Processing `{file.name}` done. You can now ask questions!"
+    msg.content = f"处理 `{file.name}` 完成。您现在可以提问了！"
     await msg.update()
 
     cl.user_session.set("brain", brain)
@@ -52,7 +52,7 @@ async def main(message: cl.Message):
     retrieval_config = RetrievalConfig.from_yaml(path_config)
 
     if brain is None:
-        await cl.Message(content="Please upload a file first.").send()
+        await cl.Message(content="请先上传一个文件。").send()
         return
 
     # Prepare the message for streaming
@@ -79,5 +79,5 @@ async def main(message: cl.Message):
     for source in saved_sources_complete:
         sources += f"- {source.metadata['original_file_name']}\n"
     msg.elements = elements
-    msg.content = msg.content + f"\n\nSources:\n{sources}"
+    msg.content = msg.content + f"\n\n来源：\n{sources}"
     await msg.update()
