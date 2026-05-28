@@ -2,13 +2,13 @@ name: Deploy Documentation to GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches: [main, zh-CN-localization]
     paths:
       - "docs/**"
       - "core/**"
       - ".github/workflows/deploy-docs.yml"
   pull_request:
-    branches: [main]
+    branches: [main, zh-CN-localization]
     paths:
       - "docs/**"
       - "core/**"
@@ -66,7 +66,7 @@ jobs:
   # Deploy job
   deploy:
     needs: build
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/zh-CN-localization')
     runs-on: ubuntu-latest
     environment:
       name: github-pages
